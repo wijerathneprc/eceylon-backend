@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 from generic_feature import Ram, Storage, Display, Color, Processor, Battery,Camera
 
 class Smartphone(models.Model):
