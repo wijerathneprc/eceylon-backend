@@ -2,11 +2,11 @@ from django.db import models
 
 class Ram(models.Model):
     type = models.CharField(max_length=255)
-    capacity=models.DecimalField()
+    capacity=models.DecimalField(max_digits=8, decimal_places=2)
 
-class Storage(models.Modle):
+class Storage(models.Model):
     type = models.CharField(max_length=255)
-    capacity=models.DecimalField()
+    capacity=models.DecimalField(max_digits=8, decimal_places=2)
 
 class Display(models.Model):
     type = models.CharField(max_length=255)
@@ -29,7 +29,7 @@ class OperatingSystem(models.Model):
 
 class GrapichCard(models.Model):
     name = models.CharField(max_length=255)
-    memory = models.DecimalField()
+    memory = models.DecimalField(max_digits=8, decimal_places=2)
     speed = models.CharField()
     description = models.TextField()
 
@@ -47,12 +47,12 @@ class Camera(models.Model):
     PRIMARY, SELFY, WEB = ('p', 'S', 'W')
     CAMERA_TYPE = [(PRIMARY, 'Primary'), (SELFY, 'Selfy'), (WEB, 'Web')]
     type = models.CharField(max_length=1, choices=CAMERA_TYPE, default=WEB)
-    size = models.DecimalField()
+    size = models.DecimalField(max_digits=8, decimal_places=2)
     description = models.TextField()
 
-class Battery(models.Modles):
+class Battery(models.Model):
     type = models.CharField(max_length=255)
-    capacity = models.DecimalField()
+    capacity = models.DecimalField(max_digits=8, decimal_places=2)
 
 class SimCard(models.Model):
     name = models.CharField(max_length=255)
