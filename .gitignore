@@ -2,3 +2,8 @@ db.sqlite3
 settings.py
 Pipfile
 Pipfile.lock
+
+smartphone
+laptop
+cart
+others

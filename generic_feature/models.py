@@ -1,8 +1,15 @@
 from django.db import models
 
+
 class Ram(models.Model):
     type = models.CharField(max_length=255)
     capacity=models.DecimalField(max_digits=8, decimal_places=2)
+    
+    def __str__(self):
+        return self.type + str(self.capacity)
+    
+
+    
 
 class Storage(models.Model):
     type = models.CharField(max_length=255)
@@ -41,7 +48,10 @@ class Connectivity(models.Model):
 class Color(models.Model):
     name = models.CharField(max_length=255)
     hash_code = models.CharField(max_length=255)
-    images = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/products/color/', blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
 
 class Camera(models.Model):
     PRIMARY, SELFY, WEB = ('p', 'S', 'W')

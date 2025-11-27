@@ -1,5 +1,5 @@
 from django.db import models
-from generic_feature import Ram, Storage, Display, Color, Processor, Battery,Camera
+from generic_feature.models import Ram, Storage, Display, Color, Processor, Battery,Camera
 
 class Smartphone(models.Model):
     type = models.CharField(max_length=255)
