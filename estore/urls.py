@@ -1,8 +1,5 @@
-
-
 from django.urls import path
 from . import views
-
 
 
 urlpatterns = [
@@ -21,23 +18,8 @@ urlpatterns = [
     path('image/<int:pk>/update', views.ImageUpdateView.as_view(), name='image-update'),
     path('image/<int:pk>/delete', views.ImageDeleteView.as_view(), name='image-delete'),
      
-    
-    path('product', views.ProductCreateView.as_view(), name='product-create'),
-    path('product/<int:pk>', views.ProdView.as_view(), name='product-view'),
-    path('product/list', views.ProductListView.as_view(), name='product-list'),
-    path('product/<int:pk>/update', views.ProductUdateView.as_view(), name='product-udate'),
-    path('product/<int:pk>/delete', views.ProductDeleteView.as_view(), name='product-delete'),
-    
-    path('config', views.ProductConfigCreateView.as_view(), name='product-config-create'),
-    path('config/list', views.ProductConfigListView.as_view(), name='product-config-list'),
-    # path('config/list', views.ProductConfigListView.as_view(), name='product-config-list'),
-    # path('config/list', views.ProductConfigListView.as_view(), name='product-config-list'),
-    
-   
     path('user/', views.UserCreateView.as_view(), name='user-register'),
     path('user/list', views.UserListView.as_view(), name='users-list'),
-    # path('user/<pk:int>/update', views.UserUdateView.as_view(), name='user-update'),
-    # path('user/<pk:int>/delete', views.UserDeleteView.as_view(), name='user-delete'),
     
     path('address', views.UserAddressCreateView.as_view(), name='address-create'),
     path('address/<int:pk>', views.UserAddressRetrieveView.as_view(), name='address-view'),
@@ -58,5 +40,4 @@ urlpatterns = [
     path('order/list', views.OrderListView.as_view(), name='order-list'),
     path('order/<int:pk>/update', views.OrderUpdateView.as_view(), name='order-udate'),
     path('order/<int:pk>/delete', views.OrderDeleteView.as_view(), name='order-delete'), 
-    path('province', views.ProvinceListView.as_view(), name='provice'), 
 ]
