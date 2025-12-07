@@ -10,7 +10,7 @@ from rest_framework import permissions, viewsets, generics
 from .serializers import ProductSerializer, BrandSerializer, CategorySerializer, ImageSerializer, ProductConfigSerializer, UserRegisterSerializer, UserAddressSerializer, CartSerializer, OrderSerializer
 from .models import Product, Brand, Category, Image, ProductConfig, UserAddress, Cart, Order
 
-
+from . import serializers
     
 class CategoryCreateView(generics.CreateAPIView):
     queryset =Category.objects.all()
@@ -96,7 +96,7 @@ class ProductListView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Product.objects.all()
         param = self.request.query_params.get('param')
-        queryset = queryset.filter(id=param) 
+        # queryset = queryset.filter(id=param) 
         return queryset
 
 class ProductView(generics.RetrieveAPIView):
@@ -112,16 +112,16 @@ class ProductView(generics.RetrieveAPIView):
 
 class ProductConfigCreateView(generics.CreateAPIView):
     serializer_class = ProductConfigSerializer
-    queryset = ProductConfig.objects.prefetch_related('product').prefetch_related('image')
+    queryset = ProductConfig.objects.all()
     
 class ProductConfigListView(generics.ListAPIView):
-    serializer_class = ProductConfigSerializer
+    serializer_class = serializers.ProductConfigListSerializer
     
     def get_queryset(self):
         queryset = ProductConfig.objects.all()
         param = self.request.query_params.get('param')
         if param:
-            queryset = queryset.filter(product_id=param) 
+            queryset = queryset.filter(id=param) 
             print(queryset.all()) 
         return queryset
 
@@ -139,6 +139,7 @@ class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
 
+
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
@@ -154,7 +155,16 @@ class UserDeleteView(generics.DestroyAPIView):
     
 class UserAddressCreateView(generics.CreateAPIView):
     queryset = UserAddress.objects.all()
-    serializer_class = UserAddressSerializer   
+    serializer_class = UserAddressSerializer 
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return UserAddress.objects.all()
+    
+    def perform_create(self, serializer):
+        print(self.request.user.id)
+        if serializer.is_valid():
+            serializer.save(user=self.request.user)
+        else: print(serializer.errors)
     
 class UserAddressListView(generics.ListAPIView):
     queryset = UserAddress.objects.all()
@@ -163,6 +173,13 @@ class UserAddressListView(generics.ListAPIView):
 class UserAddressUpdateView(generics.UpdateAPIView):
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer 
+    
+    def perform_create(self, serializer):
+        print(self.request.user.id)
+        if serializer.is_valid():
+            print(self.request.user.id)
+            serializer.save(user=self.request.user)
+        else: print(serializer.errors)
     
 class UserAddressDeleteView(generics.DestroyAPIView):
     queryset = UserAddress.objects.all()
@@ -214,3 +231,20 @@ class OrderUpdateView(generics.UpdateAPIView):
 class OrderDeleteView(generics.DestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    
+    
+    
+class ProvinceListView(generics.ListAPIView):
+    queryset = UserAddress.objects.all()
+    serializer_class= serializers.ProvinceSerializer
+    
+    
+    
+class ProdView(generics.RetrieveAPIView):
+    serializer_class = serializers.AllProductSerializer
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        # param = self.request.query_params.get('param')
+        # if param:
+        #     queryset = queryset.filter(id=param) 
+        return queryset

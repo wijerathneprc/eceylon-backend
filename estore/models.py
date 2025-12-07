@@ -35,19 +35,29 @@ class ProductConfig(models.Model):
     other_name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     release_date = models.DateField()
-    date_created = models.DateTimeField(auto_now=True)
     image = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
-    available_quantity = models.IntegerField()
-
-
+    stock = models.IntegerField()
+    sold_count = models.IntegerField(default=0)
+    warranty_period = models.IntegerField()  # in months
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
 
 class UserAddress(models.Model):
+    PROVINCE_CHOICES = [
+        ('CP', 'Central Province'),('EP', 'Eastern Province'),('NCP', 'North Central Province'), ('NP', 'Northern Province'),('NWP', 'North Western Province'),('SMP', 'Sabaragamuwa Province'),('SP', ' Southern Province'),('UP', ' Uva Province'),('WP', 'Western Province')
+    ]
+    DISTRICT_CHOICES =[
+        ('1','Jaffna'),('2','Kilinochchi'),('3','Mannar'),('4','Mullaitivu'),('5','Vavuniya'),('6','Puttalam'),('7','Kurunegala'),('8','Gampaha'),('9','Colombo'),('10','Kalutara'),('11','Trincomalee'),('12','Batticaloa'), ('13','Ampara'),('14','Badulla'), ('15','Monaragala'),('16','Hambantota'),('17','Matara'),('18','Galle'),('19','Anuradhapura'),('20','Polonnaruwa'),('21','Matale'),('22','Kandy'),('23','Nuwara Eliya'),('24','Kegalle'),('25','Ratnapura')
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    province = models.CharField(max_length=1)
+    province = models.CharField(max_length=3, choices=PROVINCE_CHOICES, default='CP')
+    district = models.CharField(max_length=2, choices=DISTRICT_CHOICES, default='1')
     city = models.CharField(max_length=255)
     street_line_01 = models.CharField(max_length=255)
     street_line_02 = models.CharField(max_length=255)
     postal_code = models.IntegerField()
+    default=models.BooleanField(default=False)
     
     
 class Cart(models.Model):
