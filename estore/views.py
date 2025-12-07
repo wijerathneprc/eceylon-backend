@@ -2,13 +2,10 @@
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, viewsets, generics
 
-# Create your views here.
-from rest_framework import permissions, viewsets, generics
-
-from .serializers import ProductSerializer, BrandSerializer, CategorySerializer, ImageSerializer, ProductConfigSerializer, UserRegisterSerializer, UserAddressSerializer, CartSerializer, OrderSerializer
-from .models import Product, Brand, Category, Image, ProductConfig, UserAddress, Cart, Order
+from .serializers import BrandSerializer, CategorySerializer, ImageSerializer, UserRegisterSerializer, UserAddressSerializer, CartSerializer, OrderSerializer
+from .models import Brand, Category, Image, ProductConfig, UserAddress, Cart, Order
 
 from . import serializers
     
@@ -79,62 +76,6 @@ class ImageListView(generics.ListAPIView):
         return queryset       
 
 
-class ProductCreateView(generics.CreateAPIView):
-    serializer_class = ProductSerializer
-    queryset = Product.objects.all()
-
-class ProductUdateView(generics.UpdateAPIView):
-    serializer_class = ProductSerializer
-    queryset = Product.objects.all()  
-    
-class ProductDeleteView(generics.DestroyAPIView):
-    serializer_class = ProductSerializer
-    queryset = Product.objects.all()
-
-class ProductListView(generics.ListAPIView):
-    serializer_class = ProductSerializer
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        param = self.request.query_params.get('param')
-        # queryset = queryset.filter(id=param) 
-        return queryset
-
-class ProductView(generics.RetrieveAPIView):
-    serializer_class = ProductSerializer
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        # param = self.request.query_params.get('param')
-        # queryset = queryset.filter(id=param) 
-        return queryset
-    
-    
-
-
-class ProductConfigCreateView(generics.CreateAPIView):
-    serializer_class = ProductConfigSerializer
-    queryset = ProductConfig.objects.all()
-    
-class ProductConfigListView(generics.ListAPIView):
-    serializer_class = serializers.ProductConfigListSerializer
-    
-    def get_queryset(self):
-        queryset = ProductConfig.objects.all()
-        param = self.request.query_params.get('param')
-        if param:
-            queryset = queryset.filter(id=param) 
-            print(queryset.all()) 
-        return queryset
-
-class ProductConfigUpdateView(generics.UpdateAPIView):
-    serializer_class = ProductConfigSerializer
-    queryset = ProductConfig.objects.prefetch_related('product').prefetch_related('image')
-    
-class ProductConfigDeleteView(generics.DestroyAPIView):
-    serializer_class = ProductConfigSerializer
-    queryset = ProductConfig.objects.prefetch_related('product').prefetch_related('image')
-
-
-
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
@@ -156,9 +97,6 @@ class UserDeleteView(generics.DestroyAPIView):
 class UserAddressCreateView(generics.CreateAPIView):
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     return UserAddress.objects.all()
     
     def perform_create(self, serializer):
         print(self.request.user.id)
@@ -232,19 +170,3 @@ class OrderDeleteView(generics.DestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     
-    
-    
-class ProvinceListView(generics.ListAPIView):
-    queryset = UserAddress.objects.all()
-    serializer_class= serializers.ProvinceSerializer
-    
-    
-    
-class ProdView(generics.RetrieveAPIView):
-    serializer_class = serializers.AllProductSerializer
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        # param = self.request.query_params.get('param')
-        # if param:
-        #     queryset = queryset.filter(id=param) 
-        return queryset
