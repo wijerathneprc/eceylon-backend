@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Brand(models.Model):
     """ Represents a brand in the online store. """ 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         """ display brand name for string representation"""
