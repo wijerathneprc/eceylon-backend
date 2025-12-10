@@ -13,7 +13,7 @@ class Brand(models.Model):
 
 class Category(models.Model):
     """ Represents a product category in the online store. """
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         """ display category name for string representation"""

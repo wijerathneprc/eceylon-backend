@@ -5,21 +5,18 @@ from .models import Brand, Category, Image, Product, ProductModel
 
 
 class BrandSerializer(serializers.ModelSerializer):
-    """ Serialize and deserialize Brand model instance"""
+    """Serialize and deserialize Brand model instances"""
     class Meta:
         model = Brand
         fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """Serialize and deserialize Category model instances"""
     class Meta:
         model = Category
         fields = '__all__'
-        
-    def validate_name(self, value):
-        if Category.objects.filter(name=value).exists():
-            raise serializers.ValidationError("Can't have same value")
-        return value
+
     
     
 class ImageSerializer(serializers.ModelSerializer):
