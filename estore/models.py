@@ -44,7 +44,7 @@ class Image(models.Model):
     Each image is linked to a specific product and includes a color description.
     """
     product = models.ForeignKey(Product, related_name='image', on_delete=models.CASCADE)
-    color = models.CharField(max_length=255,default='any color' )
+    color = models.CharField(max_length=255, default='any color')
     image = models.ImageField(upload_to='images/product')
     
     def __str__(self):
@@ -59,8 +59,8 @@ class ProductModel(models.Model):
     Each product model is linked to a general product and may have an associated image.
     each model has its own pricing and stock details.
     """
-    product = models.ForeignKey(Product, related_name='product-model', on_delete=models.CASCADE)
-    image = models.ForeignKey(Image, related_name='product-model-image' on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, related_name='product_model', on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, related_name='product_model_image', on_delete=models.SET_NULL, null=True)
     model_name = models.CharField(max_length=255)
     other_name = models.CharField(max_length=255)  
     release_date = models.DateField()
