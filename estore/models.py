@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Brand(models.Model):
@@ -31,6 +30,7 @@ class Product(models.Model):
     description = models.TextField()
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    ram = models.ManyToManyField(RAM)
     
     def __str__(self):
         """ display product name for string representation"""
@@ -81,3 +81,4 @@ class ProductModel(models.Model):
     def __str__(self):
         """ display product name and model name for string representation"""
         return f"{self.product.name} - {self.model_name}"
+    

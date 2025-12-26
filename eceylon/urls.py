@@ -50,7 +50,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('estore/', include('estore.urls')),
-    path('smartphone/', include('smartphone.urls')),
-    path('gen-feature/', include('generic_feature.urls')),
-    path('laptop/', include('laptop.urls')),
+    path('feature/', include('feature.urls')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ debug_toolbar_urls()
